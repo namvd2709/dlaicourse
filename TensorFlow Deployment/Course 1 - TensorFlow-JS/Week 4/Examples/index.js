@@ -14,6 +14,9 @@ async function loadMobilenet() {
 async function train() {
   dataset.ys = null;
   dataset.encodeLabels(3);
+    console.log(mobilenet.outputs);
+    console.log(mobilenet.outputs[0].shape);
+    console.log(mobilenet.outputs[0].shape.slice(1));
   model = tf.sequential({
     layers: [
       tf.layers.flatten({inputShape: mobilenet.outputs[0].shape.slice(1)}),

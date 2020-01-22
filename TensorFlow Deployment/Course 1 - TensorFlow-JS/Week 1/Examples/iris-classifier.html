@@ -11,7 +11,7 @@
                     }
                 }
             });
-            
+            console.log(trainingData)
             const numOfFeatures = (await trainingData.columnNames()).length - 1;
             const numOfSamples = 150;
             const convertedData =
@@ -23,7 +23,6 @@
                       ] 
                       return{ xs: Object.values(xs), ys: Object.values(labels)};
                   }).batch(10);
-            
             const model = tf.sequential();
             model.add(tf.layers.dense({inputShape: [numOfFeatures], activation: "sigmoid", units: 5}))
             model.add(tf.layers.dense({activation: "softmax", units: 3}));
@@ -33,7 +32,7 @@
             await model.fitDataset(convertedData, 
                              {epochs:100,
                               callbacks:{
-                                  onEpochEnd: async(epoch, logs) =>{
+                                  onEpochEnd: async(epoch, logs, data) =>{
                                       console.log("Epoch: " + epoch + " Loss: " + logs.loss);
                                   }
                               }});
